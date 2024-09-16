@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Is this AI?",
+  "version": "1.0",
+  "description": "Checks if the webpage contains AI-generated content based on certain phrases.",
+  "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
+    "default_title": "Is this AI?"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["styles.css"]
+    }
+  ]
+}
