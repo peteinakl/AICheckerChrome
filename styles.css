@@ -77,3 +77,63 @@
 .glass-pane {
     animation: float 3s ease-in-out infinite;
 }
+
+/* Replace the fireworks keyframes and styles with these */
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-100vh) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+.confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    pointer-events: none;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #ffd700;
+    animation: confetti-fall 6s linear infinite; /* Increased from 4s to 6s */
+}
+
+/* Remove the confetti-sway animation for now */
+
+/* Keep the existing thunderstorm styles */
+
+@keyframes thunderstorm {
+    0% { background-color: rgba(0, 0, 0, 0.3); }
+     5% { background-color: rgba(255, 255, 255, 0.9); }
+    10% { background-color: rgba(0, 0, 0, 0.3); }
+    15% { background-color: rgba(255, 255, 255, 0.9); }
+    20%, 100% { background-color: rgba(0, 0, 0, 0.3); }
+}
+
+.animation-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.fireworks {
+    background-image: 
+        radial-gradient(circle, #ff0 1px, transparent 1px),
+        radial-gradient(circle, #f0f 1px, transparent 1px),
+        radial-gradient(circle, #0ff 1px, transparent 1px);
+    background-size: 100px 100px;
+    animation: fireworks 5s linear infinite;
+}
+
+.thunderstorm {
+    animation: thunderstorm 5s ease-in-out infinite;
+}

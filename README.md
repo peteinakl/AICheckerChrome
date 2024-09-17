@@ -9,7 +9,7 @@
 ## Features
 
 - Quick analysis of web page content
-- Stylish, animated result display with a 3D glass effect
+- Clean, animated result display with a 3D glass effect
 - Three-tier result system: "Likely AI", "Could be AI", and "Doesn't look like AI"
 - Easy-to-use: just click the extension icon to analyze the current page
 
@@ -24,7 +24,7 @@
 
 1. Navigate to any web page you want to analyze.
 2. Click the "Is this AI?" extension icon in your Chrome toolbar.
-3. A stylish popup will appear, showing the analysis result.
+3. A popup will appear, showing the analysis result.
 
 ## Files
 

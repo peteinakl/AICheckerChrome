@@ -60,19 +60,22 @@ function checkPageContent() {
     icon.className = 'icon';
 
     // Determine the AI likelihood based on the number of found phrases
-    let resultText, iconContent, resultClass;
+    let resultText, iconContent, resultClass, animationClass;
     if (foundPhrases.length > 15) {
         resultText = "Likely AI";
         iconContent = "🤖";
         resultClass = "likely-ai";
+        animationClass = "thunderstorm";
     } else if (foundPhrases.length > 5) {
         resultText = "Could be AI";
         iconContent = "🤔";
         resultClass = "maybe-ai";
+        animationClass = "thunderstorm";
     } else {
         resultText = "Doesn't look like AI";
         iconContent = "👨‍💻";
         resultClass = "not-ai";
+        animationClass = "confetti";
     }
 
     icon.textContent = iconContent;
@@ -88,9 +91,28 @@ function checkPageContent() {
 
     document.body.appendChild(resultBox);
 
+    // Add animation background
+    const animationBackground = document.createElement('div');
+    animationBackground.className = `animation-background ${animationClass}`;
+    
+    if (animationClass === 'confetti') {
+        for (let i = 0; i < 50; i++) {
+            const confettiPiece = document.createElement('div');
+            confettiPiece.className = 'confetti-piece';
+            confettiPiece.style.left = `${Math.random() * 100}%`;
+            confettiPiece.style.top = `-10px`;
+            confettiPiece.style.backgroundColor = ['#ffd700', '#7fffd4', '#ff69b4', '#ff9933'][Math.floor(Math.random() * 4)];
+            confettiPiece.style.animationDelay = `${Math.random() * 4}s`;
+            animationBackground.appendChild(confettiPiece);
+        }
+    }
+    
+    document.body.appendChild(animationBackground);
+
     // Trigger the fade-in and 3D hover effect
     setTimeout(() => {
         resultBox.classList.add('visible');
+        animationBackground.style.display = 'block';
     }, 10);
 
     // Add hover effect
@@ -109,11 +131,20 @@ function checkPageContent() {
         glassPane.style.transform = 'rotateX(0deg) rotateY(0deg)';
     });
 
-    // Remove the result box after 3 seconds with a fade-out effect
+    // Remove the result box and animation background after 5 seconds (increased from 3)
+    // with a fade-out effect lasting 2 seconds (increased from 0.5)
     setTimeout(() => {
-        resultBox.classList.remove('visible');
+        resultBox.style.transition = 'opacity 2s ease';
+        resultBox.style.opacity = '0';
+        if (animationClass === 'confetti') {
+            animationBackground.style.transition = 'opacity 2s ease';
+            animationBackground.style.opacity = '0';
+        } else {
+            animationBackground.style.display = 'none';
+        }
         setTimeout(() => {
             resultBox.remove();
-        }, 500);
-    }, 3000);
+            animationBackground.remove();
+        }, 2000);
+    }, 5000);
 }
