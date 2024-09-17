@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Is this AI? Settings</title>
+    <style>
+        body {
+            width: 400px;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .setting-group {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explainer {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>AI Detection Settings</h2>
+    <div class="setting-group">
+        <label for="highSensitivity">High Sensitivity Threshold:</label>
+        <input type="number" id="highSensitivity" min="1" max="100">
+        <label for="lowSensitivity">Low Sensitivity Threshold:</label>
+        <input type="number" id="lowSensitivity" min="1" max="100">
+    </div>
+    <div class="explainer">
+        <p><strong>Note:</strong> Based on our testing, the ideal settings are:</p>
+        <ul>
+            <li>High Sensitivity Threshold: 15</li>
+            <li>Low Sensitivity Threshold: 5</li>
+        </ul>
+        <p>These values provide a good balance between detecting AI-generated content and minimizing false positives. Feel free to adjust based on your needs.</p>
+    </div>
+    <button id="save">Save Settings</button>
+    <script src="options.js"></script>
+</body>
+</html>
