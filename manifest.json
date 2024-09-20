@@ -20,11 +20,11 @@
     "48": "icon.png",
     "128": "icon.png"
   },
-  "content_scripts": [
+  "options_page": "options.html",
+  "web_accessible_resources": [
     {
-      "matches": ["<all_urls>"],
-      "css": ["styles.css"]
+      "resources": ["styles.css"],
+      "matches": ["<all_urls>"]
     }
-  ],
-  "options_page": "options.html"
+  ]
 }

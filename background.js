@@ -1,15 +1,38 @@
 // Listen for the icon click
 chrome.action.onClicked.addListener((tab) => {
-    chrome.scripting.insertCSS({
+    chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        files: ['styles.css']
+        function: injectContainer
     }, () => {
-        chrome.scripting.executeScript({
+        chrome.scripting.insertCSS({
             target: { tabId: tab.id },
-            function: checkPageContent
+            files: ['styles.css']
+        }, () => {
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                function: checkPageContent
+            });
         });
     });
 });
+
+function injectContainer() {
+    if (!document.getElementById('ai-checker-container')) {
+        const container = document.createElement('div');
+        container.id = 'ai-checker-container';
+        container.style.cssText = `
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            overflow: visible;
+            z-index: 2147483647;
+            pointer-events: none;
+        `;
+        document.body.appendChild(container);
+    }
+}
 
 // Function to check the page content
 function checkPageContent() {
@@ -54,35 +77,35 @@ function checkPageContent() {
             }
         });
 
+        const container = document.getElementById('ai-checker-container');
+        container.innerHTML = ''; // Clear previous results
+
         const resultBox = document.createElement('div');
         resultBox.className = 'ai-checker-result-box';
 
         const glassPane = document.createElement('div');
-        glassPane.className = 'glass-pane';
+        glassPane.className = 'ai-checker-glass-pane';
 
         const content = document.createElement('div');
-        content.className = 'content';
+        content.className = 'ai-checker-content';
 
         const icon = document.createElement('div');
-        icon.className = 'icon';
+        icon.className = 'ai-checker-icon';
 
         // Determine the AI likelihood based on the number of found phrases
-        let resultText, iconContent, resultClass, animationClass;
+        let resultText, iconContent, resultClass;
         if (foundPhrases.length > highSensitivity) {
             resultText = "Likely AI";
             iconContent = "🤖";
             resultClass = "likely-ai";
-            animationClass = "thunderstorm";
         } else if (foundPhrases.length > lowSensitivity) {
             resultText = "Could be AI";
             iconContent = "🤔";
             resultClass = "maybe-ai";
-            animationClass = "thunderstorm";
         } else {
             resultText = "Doesn't look like AI";
             iconContent = "👨‍💻";
             resultClass = "not-ai";
-            animationClass = "confetti";
         }
 
         icon.textContent = iconContent;
@@ -94,35 +117,12 @@ function checkPageContent() {
 
         glassPane.appendChild(content);
         resultBox.appendChild(glassPane);
-        resultBox.classList.add(resultClass);
+        resultBox.classList.add(`ai-checker-${resultClass}`);
 
-        document.body.appendChild(resultBox);
+        container.appendChild(resultBox);
 
-        // Add animation background
-        const animationBackground = document.createElement('div');
-        animationBackground.className = `animation-background ${animationClass}`;
-        
-        if (animationClass === 'confetti') {
-            for (let i = 0; i < 50; i++) {
-                const confettiPiece = document.createElement('div');
-                confettiPiece.className = 'confetti-piece';
-                confettiPiece.style.left = `${Math.random() * 100}%`;
-                confettiPiece.style.top = `-10px`;
-                confettiPiece.style.backgroundColor = ['#ffd700', '#7fffd4', '#ff69b4', '#ff9933'][Math.floor(Math.random() * 4)];
-                confettiPiece.style.animationDelay = `${Math.random() * 4}s`;
-                animationBackground.appendChild(confettiPiece);
-            }
-        }
-        
-        document.body.appendChild(animationBackground);
-
-        // Trigger the fade-in and 3D hover effect
-        setTimeout(() => {
-            resultBox.classList.add('visible');
-            animationBackground.style.display = 'block';
-        }, 10);
-
-        // Add hover effect
+        // Remove the confetti and thunderstorm code
+        // Instead, add a hover effect to the glass pane
         resultBox.addEventListener('mousemove', (e) => {
             const rect = resultBox.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -138,21 +138,14 @@ function checkPageContent() {
             glassPane.style.transform = 'rotateX(0deg) rotateY(0deg)';
         });
 
-        // Remove the result box and animation background after 5 seconds (increased from 3)
-        // with a fade-out effect lasting 2 seconds (increased from 0.5)
+        // Trigger the fade-in effect
         setTimeout(() => {
-            resultBox.style.transition = 'opacity 2s ease';
-            resultBox.style.opacity = '0';
-            if (animationClass === 'confetti') {
-                animationBackground.style.transition = 'opacity 2s ease';
-                animationBackground.style.opacity = '0';
-            } else {
-                animationBackground.style.display = 'none';
-            }
-            setTimeout(() => {
-                resultBox.remove();
-                animationBackground.remove();
-            }, 2000);
+            resultBox.classList.add('ai-checker-visible');
+        }, 10);
+
+        // Remove the results after 5 seconds
+        setTimeout(() => {
+            container.innerHTML = '';
         }, 5000);
     });
 }

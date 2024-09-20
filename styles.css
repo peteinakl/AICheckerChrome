@@ -1,30 +1,48 @@
+#ai-checker-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2147483647;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
 .ai-checker-result-box {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 20px;
+    right: 20px;
     width: 300px;
     height: 180px;
     perspective: 1000px;
-    z-index: 1001;
     opacity: 0;
     transition: opacity 0.5s ease;
+    pointer-events: auto;
 }
 
-.ai-checker-result-box.visible {
+.ai-checker-result-box.ai-checker-visible {
     opacity: 1;
 }
 
-.glass-pane {
+.ai-checker-glass-pane {
     width: 100%;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transform: rotateX(0deg) rotateY(0deg);
     transition: transform 0.1s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.content {
+.ai-checker-content {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -32,108 +50,41 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.7); /* Increased opacity */
-    backdrop-filter: blur(5px); /* Reduced blur for better readability */
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4); /* Increased border opacity */
     padding: 20px;
     box-sizing: border-box;
     text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
 }
 
-.icon {
+.ai-checker-icon {
     font-size: 64px;
     margin-bottom: 15px;
 }
 
-.content span {
+.ai-checker-content span {
     font-size: 24px;
     font-weight: bold;
+    color: rgba(0, 0, 0, 0.8);
 }
 
-.likely-ai .content {
-    background-color: rgba(255, 100, 100, 0.7); /* Increased opacity */
-    border-color: rgba(255, 100, 100, 0.6);
+.ai-checker-likely-ai .ai-checker-glass-pane {
+    background: rgba(255, 100, 100, 0.2);
 }
 
-.maybe-ai .content {
-    background-color: rgba(255, 200, 100, 0.7); /* Increased opacity */
-    border-color: rgba(255, 200, 100, 0.6);
+.ai-checker-maybe-ai .ai-checker-glass-pane {
+    background: rgba(255, 200, 100, 0.2);
 }
 
-.not-ai .content {
-    background-color: rgba(100, 255, 100, 0.7); /* Increased opacity */
-    border-color: rgba(100, 255, 100, 0.6);
+.ai-checker-not-ai .ai-checker-glass-pane {
+    background: rgba(100, 255, 100, 0.2);
 }
 
-@keyframes float {
+@keyframes ai-checker-float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
 
-.glass-pane {
-    animation: float 3s ease-in-out infinite;
+.ai-checker-glass-pane {
+    animation: ai-checker-float 3s ease-in-out infinite;
 }
 
-/* Replace the fireworks keyframes and styles with these */
-
-@keyframes confetti-fall {
-    0% { transform: translateY(-100vh) rotate(0deg); }
-    100% { transform: translateY(100vh) rotate(360deg); }
-}
-
-.confetti {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    pointer-events: none;
-}
-
-.confetti-piece {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: #ffd700;
-    animation: confetti-fall 6s linear infinite; /* Increased from 4s to 6s */
-}
-
-/* Remove the confetti-sway animation for now */
-
-/* Keep the existing thunderstorm styles */
-
-@keyframes thunderstorm {
-    0% { background-color: rgba(0, 0, 0, 0.3); }
-     5% { background-color: rgba(255, 255, 255, 0.9); }
-    10% { background-color: rgba(0, 0, 0, 0.3); }
-    15% { background-color: rgba(255, 255, 255, 0.9); }
-    20%, 100% { background-color: rgba(0, 0, 0, 0.3); }
-}
-
-.animation-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    pointer-events: none;
-}
-
-.fireworks {
-    background-image: 
-        radial-gradient(circle, #ff0 1px, transparent 1px),
-        radial-gradient(circle, #f0f 1px, transparent 1px),
-        radial-gradient(circle, #0ff 1px, transparent 1px);
-    background-size: 100px 100px;
-    animation: fireworks 5s linear infinite;
-}
-
-.thunderstorm {
-    animation: thunderstorm 5s ease-in-out infinite;
-}
+/* Remove confetti and thunderstorm styles */
