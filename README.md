@@ -4,6 +4,8 @@
 
 "Is this AI?" is a Chrome extension that helps users identify potential AI-generated content on web pages. It analyzes the text content of the current page for common phrases and patterns often associated with AI-generated text.
 
+![Screenshot of Is this AI? Chrome Extension](screenshot.png)
+
 ## Features
 
 - Quick analysis of web page content
